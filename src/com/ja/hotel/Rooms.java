@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Rooms {
 
-    public static List<Room> Rooms() {
+    public static List<Room> createRooms() {
 
         List<Room> rooms = new ArrayList<>();
 

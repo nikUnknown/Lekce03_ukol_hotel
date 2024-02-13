@@ -44,6 +44,10 @@ public class Booking {
         return booking;
     }
 
+    public int getNumberOfGuest(){
+        return guests.size();
+    }
+
 
     public int getBookingNo() {
         return bookingNo;
