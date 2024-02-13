@@ -11,7 +11,6 @@ public class Booking {
     private Room room;
     private List<Guest> guests = new ArrayList<>();
     private LocalDate checkIn;
-
     private LocalDate checkOut;
     private boolean isVacation;
     private int nights;

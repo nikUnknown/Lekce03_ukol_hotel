@@ -6,30 +6,30 @@ import com.ja.hotel.Room;
 import com.ja.hotel.Rooms;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookingManager {
+    static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d. M. yyyy");
     List<Booking> bookings = new ArrayList<>();
-    List<Room> rooms = Rooms.createRooms();
+    List<Room> rooms = new Rooms().createRooms();
     List<Guest> guests = new ArrayList<>();
 
 
-
     //metoda pro vlozeni rezervace do seznamu bookings
-    public static void addBooking(int roomNo, String name, String surname, LocalDate dateOfBirth, LocalDate checkIn, LocalDate checkOut,
+    public void addBooking(int roomNo, String name, String surname, LocalDate dateOfBirth, LocalDate checkIn, LocalDate checkOut,
                            boolean isVacation){
-        createBooking(roomNo,name,surname,dateOfBirth,checkIn,checkOut,isVacation);
-
-    }
-
-    private static void createBooking(int roomNo, String name, String surname, LocalDate dateOfBirth, LocalDate checkIn, LocalDate checkOut,
-                                      boolean isVacation){
         Booking booking = new Booking();
         Guest guest = new Guest();
         guest.setGuest(name, surname, dateOfBirth);
-
+        booking.setGuests(List.of(guest));
+        booking.setCheckIn(checkIn);
+        booking.setCheckOut(checkOut);
+        //todo dopsat zbytek room atd
+        bookings.add(booking);
     }
+
 
 
     //metoda pro ziskani rezervace se zadanym indexem seznamu
@@ -86,5 +86,14 @@ public class BookingManager {
         } else {
             return (double) totalGuests / totalBookings;
         }
+
+    }
+    //2023-06-01 až 2023-06-05: Alena Krásová (1993-05-18)[2, ano] za 4000 Kč
+    public void printAllBookings() {
+        bookings.forEach(booking -> {
+            var checkInFormat = booking.getCheckIn().format(dateTimeFormatter);
+            var checkOutFormat = booking.getCheckOut().format(dateTimeFormatter);
+            System.out.printf("%s až %s: \n",checkInFormat,checkOutFormat);
+        });
     }
 }

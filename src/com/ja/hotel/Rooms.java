@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Rooms {
 
-    public static List<Room> createRooms() {
+    public List<Room> createRooms() {
 
         List<Room> rooms = new ArrayList<>();
 
@@ -30,7 +30,7 @@ public class Rooms {
     }
 
     //Vypis vsech pokoju
-        public static void infoAboutRooms(List<Room> rooms) {
+        public void infoAboutRooms(List<Room> rooms) {
         System.out.println("Info about all rooms:");
         for (Room room : rooms) {
             System.out.println(room.toString());
