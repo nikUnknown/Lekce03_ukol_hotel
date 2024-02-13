@@ -6,20 +6,20 @@ public class Guest {
 
     private String name;
     private String surname;
-    private LocalDate dateOfbirth;
+    private LocalDate dateOfBirth;
 
 
     public void setGuest(String name, String surname, LocalDate dateOfbirth){
         this.name = name;
         this.surname = surname;
-        this.dateOfbirth = dateOfbirth;
+        this.dateOfBirth = dateOfbirth;
     }
 
     public Guest getGuest() {
         Guest guest = new Guest();
         guest.setName(name);
         guest.setSurname(surname);
-        guest.setDateOfbirth(dateOfbirth);
+        guest.setDateOfbirth(dateOfBirth);
         return guest;
     }
 
@@ -40,10 +40,10 @@ public class Guest {
     }
 
     public LocalDate getDateOfbirth() {
-        return dateOfbirth;
+        return dateOfBirth;
     }
 
     public void setDateOfbirth(LocalDate dateOfbirth) {
-        this.dateOfbirth = dateOfbirth;
+        this.dateOfBirth = dateOfbirth;
     }
 }
