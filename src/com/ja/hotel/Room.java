@@ -51,7 +51,7 @@ public class Room {
     }
 
     //Metoda pro zadani udaju o pokoji
-    public void setRoom(int roomNo,int beds,boolean withBalcony,boolean seaView){
+    public void setRoom(int roomNo,int beds,boolean withBalcony,boolean seaView, BigDecimal price){
         this.roomNo = roomNo;
         this.beds = beds;
         this.withBalcony = withBalcony;
