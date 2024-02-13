@@ -9,7 +9,7 @@ public class Room {
     private boolean seaView;
     private BigDecimal price;
 
-//Gettery a settery pro atributy tridy Room
+    //Gettery a settery pro atributy tridy Room
     public int getRoomNo() {
         return roomNo;
     }
@@ -51,7 +51,7 @@ public class Room {
     }
 
     //Metoda pro zadani udaju o pokoji
-    public void setRoom(int roomNo,int beds,boolean withBalcony,boolean seaView, BigDecimal price){
+    public void setRoom(int roomNo, int beds, boolean withBalcony, boolean seaView, BigDecimal price) {
         this.roomNo = roomNo;
         this.beds = beds;
         this.withBalcony = withBalcony;
@@ -59,7 +59,7 @@ public class Room {
         this.price = price;
     }
 
-    public Room getRoom(){
+    public Room getRoom() {
         Room room = new Room();
         room.setRoomNo(roomNo);
         room.setBeds(beds);
@@ -68,6 +68,21 @@ public class Room {
         room.setPrice(price);
 
         return room;
+    }
+
+    public String getRoomInfo() {
+        String info;
+        if (withBalcony && seaView) {
+            info = "Room with balcony and sea view.";
+        } else if (withBalcony) {
+            info ="Room with balcony.";
+        } else if (seaView) {
+            info = "Room with sea view.";
+        } else {
+            info = "Room without balcony and sea view.";
+        }
+
+        return roomNo+beds+info+price+"CZK/per night";
     }
 
 }
