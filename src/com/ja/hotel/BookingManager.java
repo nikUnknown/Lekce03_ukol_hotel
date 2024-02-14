@@ -119,9 +119,16 @@ public class BookingManager {
                 });
 
                 count++;
-
             }
         }
         return null;
     }
+
+    /*
+    public List<Booking> printGuestStatistics(){
+        System.out.println("\nGuest statistics:");
+        int numberOfGuest = 0;
+    */
+
+
 }
