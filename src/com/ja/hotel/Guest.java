@@ -19,7 +19,7 @@ public class Guest {
         Guest guest = new Guest();
         guest.setName(name);
         guest.setSurname(surname);
-        guest.setDateOfbirth(dateOfBirth);
+        guest.setDateOfBirth(dateOfBirth);
         return guest;
     }
 
@@ -39,11 +39,11 @@ public class Guest {
         this.surname = surname;
     }
 
-    public LocalDate getDateOfbirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfbirth(LocalDate dateOfbirth) {
-        this.dateOfBirth = dateOfbirth;
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }
