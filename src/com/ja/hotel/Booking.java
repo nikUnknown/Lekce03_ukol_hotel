@@ -9,6 +9,7 @@ public class Booking {
 
     private int bookingNo;
     private Room room;
+    private int numberOfGuests;
     private List<Guest> guests = new ArrayList<>();
     private LocalDate checkIn;
     private LocalDate checkOut;
@@ -17,9 +18,10 @@ public class Booking {
     private BigDecimal totalPrice;
 
 
-    public void setBooking(int bookingNo, Room room, Guest guest, LocalDate checkIn, LocalDate checkOut, boolean isVacation, int nights, BigDecimal totalPrice){
+    public void setBooking(int bookingNo, Room room, int numberOfGuests, Guest guest, LocalDate checkIn, LocalDate checkOut, boolean isVacation, int nights, BigDecimal totalPrice){
         this.bookingNo = bookingNo;
         this.room = room;
+        this.numberOfGuests = numberOfGuests;
         this.guests.add(guest);
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -33,6 +35,7 @@ public class Booking {
         Booking booking = new Booking();
         booking.setBookingNo(bookingNo);
         booking.setRoom(room);
+        booking.setNumberOfGuests(numberOfGuests);
         booking.setGuests(guests);
         booking.setCheckIn(checkIn);
         booking.setCheckOut(checkOut);
@@ -62,6 +65,14 @@ public class Booking {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public int getNumberOfGuests() {
+        return numberOfGuests;
+    }
+
+    public void setNumberOfGuests(int numberOfGuests) {
+        this.numberOfGuests = numberOfGuests;
     }
 
     public List<Guest> getGuests() {

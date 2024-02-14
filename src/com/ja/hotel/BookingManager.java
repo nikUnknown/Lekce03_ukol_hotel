@@ -20,10 +20,11 @@ public class BookingManager {
 
 
     //metoda pro vlozeni rezervace do seznamu bookings
-    public void addBooking(int roomNo, String name, String surname, LocalDate dateOfBirth, LocalDate checkIn, LocalDate checkOut,
+    public void addBooking(int roomNo, int numberOfPeople, String name, String surname, LocalDate dateOfBirth, LocalDate checkIn, LocalDate checkOut,
                            boolean isVacation, BigDecimal totalPrice) {
         Booking booking = new Booking();
         Guest guest = new Guest();
+        booking.setNumberOfGuests(numberOfPeople);
         guest.setGuest(name, surname, dateOfBirth);
         booking.setGuests(List.of(guest));
         booking.setCheckIn(checkIn);
@@ -114,7 +115,7 @@ public class BookingManager {
                 booking.getGuests().forEach(guest -> {
                     System.out.printf("%s - %s :%s %s (%s)[%d, %s] za %s Kč\n",
                             booking.getCheckIn(), booking.getCheckOut(), guest.getName(), guest.getSurname(), guest.getDateOfBirth().format(dateTimeFormatter),
-                            booking.getNumberOfGuest(), booking.isVacation() ? "ano" : "ne", booking.getTotalPrice())
+                            booking.getNumberOfGuests(), booking.isVacation() ? "ano" : "ne", booking.getTotalPrice())
                     ;
                 });
 
