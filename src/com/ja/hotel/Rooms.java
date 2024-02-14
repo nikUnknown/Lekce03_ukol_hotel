@@ -29,12 +29,4 @@ public class Rooms {
         return rooms;
     }
 
-    //Vypis vsech pokoju
-        public void infoAboutRooms(List<Room> rooms) {
-        System.out.println("Info about all rooms:");
-        for (Room room : rooms) {
-            System.out.println(room.toString());
-        }
-        System.out.println("");
-    }
 }

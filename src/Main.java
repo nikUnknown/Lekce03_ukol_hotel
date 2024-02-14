@@ -1,11 +1,5 @@
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-
-import com.ja.hotel.Booking;
 import com.ja.hotel.BookingManager;
 
 public class Main {
