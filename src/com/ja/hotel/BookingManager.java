@@ -1,11 +1,5 @@
 package com.ja.hotel;
 
-import com.ja.hotel.Booking;
-import com.ja.hotel.Guest;
-import com.ja.hotel.Room;
-import com.ja.hotel.Rooms;
-
-import javax.xml.namespace.QName;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -16,7 +10,6 @@ public class BookingManager {
     static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d. M. yyyy");
     List<Booking> bookings = new ArrayList<>();
     List<Room> rooms = new Rooms().createRooms();
-    List<Guest> guests = new ArrayList<>();
 
 
     //metoda pro vlozeni rezervace do seznamu bookings
@@ -30,9 +23,20 @@ public class BookingManager {
         booking.setCheckIn(checkIn);
         booking.setCheckOut(checkOut);
         booking.setVacation(isVacation);
-        booking.setTotalPrice(totalPrice);
+        booking.setPrice(totalPrice);
+        booking.setRoom(findRoomByNo(roomNo));
 
         bookings.add(booking);
+    }
+
+    //Metoda vracejici cislo pokoje
+    public Room findRoomByNo(int roomNo) {
+        for (Room r : rooms) {
+            if (r.getRoomNo() == roomNo) {
+                return r;
+            }
+        }
+        return null;
     }
 
 
@@ -56,7 +60,7 @@ public class BookingManager {
     }
 
     //metoda ktera vrati pocet rezervaci pro pracovni pobyty
-    public int getNumberOfWorkingBookings(List<Booking> bookings) {
+    public int getNumberOfWorkingBookings() {
         int workingBookings = 0;
         for (Booking booking : bookings) {
             if (!booking.isVacation()) {
@@ -66,7 +70,8 @@ public class BookingManager {
         return workingBookings;
     }
 
-    public int getNumberOfVacationBookings(List<Booking> bookings) {
+    //Metoda vracejici pocet rezervaci kde isVacation=true
+    public int getNumberOfVacationBookings() {
         int vacationBookings = 0;
         for (Booking booking : bookings) {
             if (booking.isVacation()) {
@@ -77,33 +82,38 @@ public class BookingManager {
     }
 
     //metoda ktera vrati prumerny pocet hostu na rezervaci
-    public double getAverageGuests(List<Booking> bookings) {
-        int totalGuests = 0;
-        int totalBookings = 0;
+    public double getAverageGuests() {
+        double totalGuests = 0;
+        double totalBookings = 0;
 
         for (Booking booking : bookings) {
             totalGuests += booking.getNumberOfGuest();
+            totalBookings++;
         }
 
         if (totalBookings == 0) {
             return 0;
         } else {
-            return (double) totalGuests / totalBookings;
+            return totalGuests / totalBookings;
         }
 
     }
 
-    //2023-06-01 až 2023-06-05: Alena Krásová (1993-05-18)[2, ano] za 4000 Kč
+    //Vypis vsech rezervaci ve formatu - 2023-06-01 až 2023-06-05: Alena Krásová (1993-05-18)[2, ano - seaView] za 4000 Kč
     public void printAllBookings() {
         System.out.println("List of all bookings:");
         bookings.forEach(booking -> {
             var checkInFormat = booking.getCheckIn().format(dateTimeFormatter);
             var checkOutFormat = booking.getCheckOut().format(dateTimeFormatter);
-            System.out.printf("%s to %s: \n", checkInFormat, checkOutFormat);
+            System.out.printf("%s to %s: %s [%d, %s] for %sCzk\n", checkInFormat, checkOutFormat, booking.getGuests(), booking.getNumberOfGuests(),
+                    booking.getRoom().isSeaView() ? "yes" : "no", booking.getPrice());
+            System.out.println("Number of nights: "+booking.getBookingLength());
+            System.out.println("Total price: "+booking.getTotalPrice()+"\n");
         });
 
     }
 
+    //Vypis prvnich 8 rezervaci kde je typ rezervaca vacation
     public List<Booking> printFirstEightVacation() {
         System.out.println("\nList of first eight vacation bookings:");
         int count = 0;
@@ -113,9 +123,9 @@ public class BookingManager {
             }
             if (booking.isVacation()) {
                 booking.getGuests().forEach(guest -> {
-                    System.out.printf("%s - %s :%s %s (%s)[%d, %s] za %s Kč\n",
+                    System.out.printf("%s - %s :%s %s (%s)[%d, %s] for %sCzk\n",
                             booking.getCheckIn(), booking.getCheckOut(), guest.getName(), guest.getSurname(), guest.getDateOfBirth().format(dateTimeFormatter),
-                            booking.getNumberOfGuests(), booking.isVacation() ? "ano" : "ne", booking.getTotalPrice())
+                            booking.getNumberOfGuests(), booking.getRoom().isSeaView() ? "yes" : "no", booking.getPrice())
                     ;
                 });
 
@@ -125,11 +135,28 @@ public class BookingManager {
         return null;
     }
 
-    /*
-    public List<Booking> printGuestStatistics(){
-        System.out.println("\nGuest statistics:");
-        int numberOfGuest = 0;
-    */
+    //Metoda vypisujici statistiky o poctu hostu v ramci rezervace
+    public void printGuestStatistics() {
+        int bookingsWithOneGuest = 0;
+        int bookingsWithTwoGuests = 0;
+        int bookingsWithMoreThanTwoGuests = 0;
+
+        for (Booking booking : bookings) {
+            int numberOfGuests = booking.getNumberOfGuests();
+            if (numberOfGuests == 1) {
+                bookingsWithOneGuest++;
+            } else if (numberOfGuests == 2) {
+                bookingsWithTwoGuests++;
+            } else {
+                bookingsWithMoreThanTwoGuests++;
+            }
+        }
+
+        System.out.println("\nGuest Statistics:");
+        System.out.printf("Bookings with 1 guest: %d\n", bookingsWithOneGuest);
+        System.out.printf("Bookings with 2 guests: %d\n", bookingsWithTwoGuests);
+        System.out.printf("Bookings with more than 2 guests: %d\n", bookingsWithMoreThanTwoGuests);
+    }
 
 
 }

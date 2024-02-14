@@ -42,7 +42,7 @@ public class Room {
         this.seaView = seaView;
     }
 
-    public BigDecimal getPrice() {
+    public BigDecimal getPricePerNight() {
         return price;
     }
 

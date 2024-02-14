@@ -15,12 +15,21 @@ public class Main {
 
     public static void main(String[] args) {
 
+        System.out.println("BOOKING SYSTEM\n");
 
         fillBookings();
 
         bookingManager.printAllBookings();
 
         bookingManager.printFirstEightVacation();
+
+        bookingManager.printGuestStatistics();
+
+        System.out.println("\n***********");
+        System.out.println("Average guests: "+bookingManager.getAverageGuests());
+        System.out.println("Business trips: "+bookingManager.getNumberOfWorkingBookings());
+        System.out.println("Vacations: "+bookingManager.getNumberOfVacationBookings());
+
 
     }
 

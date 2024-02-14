@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.temporal.ChronoUnit;
 
 public class Booking {
 
@@ -15,7 +16,7 @@ public class Booking {
     private LocalDate checkOut;
     private boolean isVacation;
     private int nights;
-    private BigDecimal totalPrice;
+    private BigDecimal price;
 
 
     public void setBooking(int bookingNo, Room room, int numberOfGuests, Guest guest, LocalDate checkIn, LocalDate checkOut, boolean isVacation, int nights, BigDecimal totalPrice){
@@ -27,8 +28,21 @@ public class Booking {
         this.checkOut = checkOut;
         this.isVacation = isVacation;
         this.nights = nights;
-        this.totalPrice = totalPrice;
+        this.price = totalPrice;
 
+    }
+
+    //Metoda vracejici pocet noci pro danou rezervaci
+    public long getBookingLength(){
+        return ChronoUnit.DAYS.between(checkIn, checkOut);
+
+    }
+
+    //Metoda vracejici celkovou cenu pro jednotlive rezervace
+    public BigDecimal getTotalPrice() {
+        long nights = getBookingLength();
+        BigDecimal price = room.getPricePerNight();
+        return price.multiply(BigDecimal.valueOf(nights));
     }
 
     public Booking getBooking(){
@@ -41,15 +55,14 @@ public class Booking {
         booking.setCheckOut(checkOut);
         booking.setVacation(isVacation);
         booking.setNight(nights);
-        booking.setTotalPrice(totalPrice);
+        booking.setPrice(price);
 
         return booking;
     }
 
     public int getNumberOfGuest(){
-        return guests.size();
+        return numberOfGuests;
     }
-
 
     public int getBookingNo() {
         return bookingNo;
@@ -115,11 +128,11 @@ public class Booking {
         this.nights = night;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

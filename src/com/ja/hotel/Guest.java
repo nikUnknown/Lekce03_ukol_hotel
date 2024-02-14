@@ -9,10 +9,10 @@ public class Guest {
     private LocalDate dateOfBirth;
 
 
-    public void setGuest(String name, String surname, LocalDate dateOfbirth){
+    public void setGuest(String name, String surname, LocalDate dateOfBirth){
         this.name = name;
         this.surname = surname;
-        this.dateOfBirth = dateOfbirth;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public Guest getGuest() {
@@ -21,6 +21,11 @@ public class Guest {
         guest.setSurname(surname);
         guest.setDateOfBirth(dateOfBirth);
         return guest;
+    }
+//Alena Krásová (1993-05-18)
+    @Override
+    public String toString() {
+        return name+" "+surname+" ("+dateOfBirth+")";
     }
 
     public String getName() {
