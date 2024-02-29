@@ -4,40 +4,22 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BookingManager {
     static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d. M. yyyy");
     List<Booking> bookings = new ArrayList<>();
-    List<Room> rooms = new Rooms().createRooms();
 
+    public BookingManager() {
+        RoomManager.createRooms();
+    }
 
     //metoda pro vlozeni rezervace do seznamu bookings
-    public void addBooking(int roomNo, int numberOfPeople, String name, String surname, LocalDate dateOfBirth, LocalDate checkIn, LocalDate checkOut,
-                           boolean isVacation, BigDecimal totalPrice) {
-        Booking booking = new Booking();
-        Guest guest = new Guest();
-        booking.setNumberOfGuests(numberOfPeople);
-        guest.setGuest(name, surname, dateOfBirth);
-        booking.setGuests(List.of(guest));
-        booking.setCheckIn(checkIn);
-        booking.setCheckOut(checkOut);
-        booking.setVacation(isVacation);
-        booking.setPrice(totalPrice);
-        booking.setRoom(findRoomByNo(roomNo));
-
+    public void addBooking(Booking booking) {
         bookings.add(booking);
     }
 
-    //Metoda vracejici cislo pokoje
-    public Room findRoomByNo(int roomNo) {
-        for (Room r : rooms) {
-            if (r.getRoomNo() == roomNo) {
-                return r;
-            }
-        }
-        return null;
-    }
 
 
     //metoda pro ziskani rezervace se zadanym indexem seznamu
@@ -51,7 +33,7 @@ public class BookingManager {
 
     //metoda pro ziskani seznamu rezervaci
     public List<Booking> getBookings() {
-        return bookings;
+        return new ArrayList<>(bookings);
     }
 
     //metoda pro vymazani seznamu rezervaci
@@ -75,7 +57,7 @@ public class BookingManager {
         int vacationBookings = 0;
         for (Booking booking : bookings) {
             if (booking.isVacation()) {
-                vacationBookings += booking.getNumberOfGuest();
+                vacationBookings += booking.getNumberOfGuests();
             }
         }
         return vacationBookings;
@@ -87,7 +69,7 @@ public class BookingManager {
         double totalBookings = 0;
 
         for (Booking booking : bookings) {
-            totalGuests += booking.getNumberOfGuest();
+            totalGuests += booking.getNumberOfGuests();
             totalBookings++;
         }
 
@@ -106,9 +88,8 @@ public class BookingManager {
             var checkInFormat = booking.getCheckIn().format(dateTimeFormatter);
             var checkOutFormat = booking.getCheckOut().format(dateTimeFormatter);
             System.out.printf("%s to %s: %s [%d, %s] for %sCzk\n", checkInFormat, checkOutFormat, booking.getGuests(), booking.getNumberOfGuests(),
-                    booking.getRoom().isSeaView() ? "yes" : "no", booking.getPrice());
-            System.out.println("Number of nights: "+booking.getBookingLength());
-            System.out.println("Total price: "+booking.getTotalPrice()+"\n");
+                    booking.getRoom().isSeaView() ? "yes" : "no", booking.getTotalPrice());
+            System.out.println("Number of nights: "+booking.getBookingLength()+"\n");
         });
 
     }
@@ -125,7 +106,7 @@ public class BookingManager {
                 booking.getGuests().forEach(guest -> {
                     System.out.printf("%s - %s :%s %s (%s)[%d, %s] for %sCzk\n",
                             booking.getCheckIn(), booking.getCheckOut(), guest.getName(), guest.getSurname(), guest.getDateOfBirth().format(dateTimeFormatter),
-                            booking.getNumberOfGuests(), booking.getRoom().isSeaView() ? "yes" : "no", booking.getPrice())
+                            booking.getNumberOfGuests(), booking.getRoom().isSeaView() ? "yes" : "no", booking.getTotalPrice())
                     ;
                 });
 

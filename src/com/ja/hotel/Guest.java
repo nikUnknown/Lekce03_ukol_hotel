@@ -8,6 +8,15 @@ public class Guest {
     private String surname;
     private LocalDate dateOfBirth;
 
+    //Konstruktor
+    public Guest(String name, String surname, LocalDate dateOfBirth) {
+        this.name = name;
+        this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
+    }
+    public Guest() {
+        this("","",LocalDate.now());
+    }
 
     public void setGuest(String name, String surname, LocalDate dateOfBirth){
         this.name = name;

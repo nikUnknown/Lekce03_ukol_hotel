@@ -10,32 +10,46 @@ public class Booking {
 
     private int bookingNo;
     private Room room;
-    private int numberOfGuests;
     private List<Guest> guests = new ArrayList<>();
     private LocalDate checkIn;
     private LocalDate checkOut;
     private boolean isVacation;
     private int nights;
-    private BigDecimal price;
 
 
-    public void setBooking(int bookingNo, Room room, int numberOfGuests, Guest guest, LocalDate checkIn, LocalDate checkOut, boolean isVacation, int nights, BigDecimal totalPrice){
+    //Konstruktor
+    public Booking(int bookingNo, Room room, List<Guest> guests, LocalDate checkIn, LocalDate checkOut, boolean isVacation) {
         this.bookingNo = bookingNo;
         this.room = room;
-        this.numberOfGuests = numberOfGuests;
+        this.guests = guests;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.isVacation = isVacation;
+        this.nights = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
+    }
+
+    /*
+    public Booking() {
+        this(1,RoomManager.getRoomByNo(1),new ArrayList<>(),LocalDate.now(),LocalDate.MAX,true);
+    }
+
+
+    public void setBooking(int bookingNo, Room room, Guest guest, LocalDate checkIn, LocalDate checkOut, boolean isVacation){
+        this.bookingNo = bookingNo;
+        this.room = room;
         this.guests.add(guest);
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.isVacation = isVacation;
-        this.nights = nights;
-        this.price = totalPrice;
+        this.nights = (int) ChronoUnit.DAYS.between(checkIn, checkOut);
 
     }
+
+     */
 
     //Metoda vracejici pocet noci pro danou rezervaci
     public long getBookingLength(){
         return ChronoUnit.DAYS.between(checkIn, checkOut);
-
     }
 
     //Metoda vracejici celkovou cenu pro jednotlive rezervace
@@ -45,6 +59,7 @@ public class Booking {
         return price.multiply(BigDecimal.valueOf(nights));
     }
 
+    /*
     public Booking getBooking(){
         Booking booking = new Booking();
         booking.setBookingNo(bookingNo);
@@ -55,13 +70,13 @@ public class Booking {
         booking.setCheckOut(checkOut);
         booking.setVacation(isVacation);
         booking.setNight(nights);
-        booking.setPrice(price);
 
         return booking;
     }
+     */
 
-    public int getNumberOfGuest(){
-        return numberOfGuests;
+    public int getNumberOfGuests(){
+        return guests.size();
     }
 
     public int getBookingNo() {
@@ -78,14 +93,6 @@ public class Booking {
 
     public void setRoom(Room room) {
         this.room = room;
-    }
-
-    public int getNumberOfGuests() {
-        return numberOfGuests;
-    }
-
-    public void setNumberOfGuests(int numberOfGuests) {
-        this.numberOfGuests = numberOfGuests;
     }
 
     public List<Guest> getGuests() {
@@ -128,11 +135,4 @@ public class Booking {
         this.nights = night;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
 }

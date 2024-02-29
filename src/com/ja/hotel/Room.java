@@ -1,6 +1,8 @@
 package com.ja.hotel;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Room {
     private int roomNo;
@@ -8,6 +10,22 @@ public class Room {
     private boolean withBalcony;
     private boolean seaView;
     private BigDecimal price;
+
+    /*
+    public Room() {
+        this(1,2,true,true,BigDecimal.valueOf(1000));
+    }
+
+     */
+
+    //Konstruktor
+    public Room(int roomNo, int beds, boolean withBalcony, boolean seaView, BigDecimal price) {
+        this.roomNo = roomNo;
+        this.beds = beds;
+        this.withBalcony = withBalcony;
+        this.seaView = seaView;
+        this.price = price;
+    }
 
     //Gettery a settery pro atributy tridy Room
     public int getRoomNo() {
@@ -59,6 +77,7 @@ public class Room {
         this.price = price;
     }
 
+    /*
     public Room getRoom() {
         Room room = new Room();
         room.setRoomNo(roomNo);
@@ -69,6 +88,8 @@ public class Room {
 
         return room;
     }
+
+     */
 
     public String getRoomInfo() {
         String info;
